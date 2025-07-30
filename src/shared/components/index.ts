@@ -8,4 +8,5 @@ export {
 } from "./PageLayout";
 export { ProtectedRoute } from "./ProtectedRoute";
 
-// Adicionar exports conforme os componentes forem criados
+export * from "./navigation";
+

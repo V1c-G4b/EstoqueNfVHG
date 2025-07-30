@@ -13,10 +13,6 @@ import {
 } from "lucide-react";
 import * as React from "react";
 
-import { NavMain } from "@/components/nav-main";
-import { NavProjects } from "@/components/nav-projects";
-import { NavSecondary } from "@/components/nav-secondary";
-import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -34,6 +30,10 @@ import {
   notasFiscaisRoutes,
   usuariosRoutes,
 } from "@/shared/constants";
+import { NavMain } from "./nav-main";
+import { NavProjects } from "./nav-projects";
+import { NavSecondary } from "./nav-secondary";
+import { NavUser } from "./nav-user";
 
 const data = {
   user: {
@@ -47,20 +47,6 @@ const data = {
       url: dashboardRoutes.home,
       icon: Home,
       isActive: true,
-      items: [
-        {
-          title: "Visão Geral",
-          url: dashboardRoutes.home,
-        },
-        {
-          title: "Relatórios",
-          url: dashboardRoutes.relatorios,
-        },
-        {
-          title: "Análises",
-          url: dashboardRoutes.analises,
-        },
-      ],
     },
     {
       title: "Estoque",
@@ -76,12 +62,12 @@ const data = {
           url: estoqueRoutes.create,
         },
         {
-          title: "Movimentações",
-          url: estoqueRoutes.movimentacoes,
+          title: "Transferências",
+          url: estoqueRoutes.transferencias,
         },
         {
-          title: "Relatórios",
-          url: estoqueRoutes.relatorios,
+          title: "Unidades",
+          url: estoqueRoutes.unidades,
         },
       ],
     },
@@ -98,57 +84,17 @@ const data = {
           title: "Consultar NF",
           url: notasFiscaisRoutes.consultar,
         },
-        {
-          title: "Histórico",
-          url: notasFiscaisRoutes.historico,
-        },
-        {
-          title: "Cancelamentos",
-          url: notasFiscaisRoutes.cancelamentos,
-        },
       ],
     },
     {
       title: "Usuários",
       url: usuariosRoutes.list,
       icon: Users,
-      items: [
-        {
-          title: "Gerenciar",
-          url: usuariosRoutes.gerenciar,
-        },
-        {
-          title: "Permissões",
-          url: usuariosRoutes.permissoes,
-        },
-        {
-          title: "Auditoria",
-          url: usuariosRoutes.auditoria,
-        },
-      ],
     },
     {
       title: "Configurações",
       url: configuracoesRoutes.home,
       icon: Settings2,
-      items: [
-        {
-          title: "Geral",
-          url: configuracoesRoutes.geral,
-        },
-        {
-          title: "Empresa",
-          url: configuracoesRoutes.empresa,
-        },
-        {
-          title: "Impostos",
-          url: configuracoesRoutes.impostos,
-        },
-        {
-          title: "Backup",
-          url: configuracoesRoutes.backup,
-        },
-      ],
     },
   ],
   navSecondary: [

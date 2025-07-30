@@ -8,7 +8,7 @@ import {
 import { FileText, Package, TrendingUp, Users } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
-import CardChart from "@/features/dashboard/components/cardChart";
+import { CardChart } from "@/features/dashboard/components/cardChart";
 import CardChartContainer from "../components/cardChartContainer";
 
 const chartData = [

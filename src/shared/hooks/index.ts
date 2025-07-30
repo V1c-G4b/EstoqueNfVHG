@@ -1,12 +1,26 @@
 import { useCallback, useEffect, useState } from "react";
 
-// Hook para controle de modais
+// Re-exportar hooks das stores
+export { useAuth } from "./useAuth";
+export {
+  useAlertasDashboard,
+  useDashboard,
+  useEstatisticasDashboard,
+} from "./useDashboard";
+export { useMovimentacoes, useProdutos } from "./useEstoque";
+export { useNotasFiscais } from "./useNotasFiscais";
+
+export { useIsMobile } from "./use-mobile";
+export { useConfirmation } from "./useConfirmation";
+export { useEstoqueMetrics } from "./useEstoqueMetrics";
+export { useLoading } from "./useLoading";
+
 export const useModal = (initialState = false) => {
   const [isOpen, setIsOpen] = useState(initialState);
 
   const open = useCallback(() => setIsOpen(true), []);
   const close = useCallback(() => setIsOpen(false), []);
-  const toggle = useCallback(() => setIsOpen((prev) => !prev), []);
+  const toggle = useCallback(() => setIsOpen((prev: boolean) => !prev), []);
 
   return {
     isOpen,
@@ -16,7 +30,6 @@ export const useModal = (initialState = false) => {
   };
 };
 
-// Hook para toggle de estados
 export const useToggle = (initialState = false) => {
   const [state, setState] = useState(initialState);
 
@@ -32,7 +45,6 @@ export const useToggle = (initialState = false) => {
   };
 };
 
-// Hook para debounce
 export const useDebounce = <T>(value: T, delay: number): T => {
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
 
@@ -49,7 +61,6 @@ export const useDebounce = <T>(value: T, delay: number): T => {
   return debouncedValue;
 };
 
-// Hook para localStorage
 export const useLocalStorage = <T>(key: string, initialValue: T) => {
   const [storedValue, setStoredValue] = useState<T>(() => {
     try {

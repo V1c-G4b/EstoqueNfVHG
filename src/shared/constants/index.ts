@@ -1,11 +1,9 @@
-// Constantes básicas da aplicação
 export const APP_CONFIG = {
   NAME: "VHG Estoque NF",
   VERSION: "1.0.0",
   DESCRIPTION: "Sistema de Gestão de Estoque e Notas Fiscais",
 } as const;
 
-// Rotas centralizadas do sistema
 export { authRoutes, type AuthRoute } from "@/features/auth/routes";
 export {
   dashboardRoutes,
@@ -19,7 +17,6 @@ export {
 export { usuariosRoutes, type UsuariosRoute } from "@/features/usuarios/routes";
 export { configuracoesRoutes, type ConfiguracoesRoute } from "./routes";
 
-// Rotas auxiliares
 export const appRoutes = {
   root: "/",
   suporte: "/suporte",

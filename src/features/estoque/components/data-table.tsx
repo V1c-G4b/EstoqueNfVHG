@@ -13,6 +13,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/shared/components/ui/table";
+import { Package } from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -72,9 +73,17 @@ export function DataTable<TData, TValue>({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center"
+                  className="h-32 text-center"
                 >
-                  No results.
+                  <div className="flex flex-col items-center justify-center space-y-2">
+                    <Package className="h-8 w-8 text-muted-foreground" />
+                    <p className="text-muted-foreground">
+                      Nenhum produto encontrado
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      Adicione produtos ao seu estoque para começar
+                    </p>
+                  </div>
                 </TableCell>
               </TableRow>
             )}

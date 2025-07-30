@@ -1,126 +1,212 @@
-import { PageLayout } from "@/shared/components/PageLayout";
+import { TableLayout } from "@/shared/components/PageLayout";
+import { Badge } from "@/shared/components/ui/badge";
 import { Button } from "@/shared/components/ui/button";
-import { useEffect, useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/shared/components/ui/card";
+import { Skeleton } from "@/shared/components/ui/skeleton";
+import { useProdutos } from "@/shared/hooks";
+import { AlertTriangle, Package, TrendingUp } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { columns, type Produto } from "../components/column";
+import { columns } from "../components/column";
 import { DataTable } from "../components/data-table";
 import { XMLImportDialog } from "../components/dialogProduct";
+import { TableToolbar } from "../components/table-toolbar";
 
 export function EstoquePage() {
-  const [data, setData] = useState<Produto[]>([]);
+  const [searchValue, setSearchValue] = useState("");
+  const [statusFilter, setStatusFilter] = useState<
+    "all" | "active" | "inactive" | "no-stock"
+  >("all");
   const navigate = useNavigate();
 
-  async function getData(): Promise<Produto[]> {
-    return [
-      {
-        id: "728ed52f",
-        nomeProduto: "Smartphone Samsung Galaxy S24",
-        codigoBarras: "7891234567890",
-        quantidade: 15,
-        imagemUrl: "https://placehold.co/600x400",
-        ativo: true,
-        dataCriacao: new Date("2024-01-15"),
-        dataAtualizacao: new Date("2024-12-20"),
-      },
-      {
-        id: "489e1d42",
-        nomeProduto: "Notebook Dell Inspiron 15",
-        codigoBarras: "7891234567891",
-        quantidade: 8,
-        imagemUrl: "https://placehold.co/600x400",
-        ativo: true,
-        dataCriacao: new Date("2024-02-10"),
-        dataAtualizacao: new Date("2024-12-18"),
-      },
-      {
-        id: "a8f3c7e1",
-        nomeProduto: "Mouse Logitech MX Master 3",
-        codigoBarras: "7891234567892",
-        quantidade: 25,
-        imagemUrl: "https://placehold.co/600x400",
-        ativo: true,
-        dataCriacao: new Date("2024-03-05"),
-        dataAtualizacao: new Date("2024-12-15"),
-      },
-      {
-        id: "b2d1f9a3",
-        nomeProduto: "Teclado Mecânico Corsair K95",
-        codigoBarras: "7891234567893",
-        quantidade: 0,
-        imagemUrl: "https://placehold.co/600x400",
-        ativo: false,
-        dataCriacao: new Date("2024-04-12"),
-        dataAtualizacao: new Date("2024-12-10"),
-      },
-      {
-        id: "c5e8a2b4",
-        nomeProduto: "Monitor LG UltraWide 34'",
-        codigoBarras: "7891234567894",
-        quantidade: 5,
-        imagemUrl: "https://placehold.co/600x400",
-        ativo: true,
-        dataCriacao: new Date("2024-05-20"),
-        dataAtualizacao: new Date("2024-12-22"),
-      },
-      {
-        id: "d7f4b8c6",
-        nomeProduto: "Headset HyperX Cloud III",
-        codigoBarras: "7891234567895",
-        quantidade: 12,
-        imagemUrl: "https://placehold.co/600x400",
-        ativo: true,
-        dataCriacao: new Date("2024-06-08"),
-        dataAtualizacao: new Date("2024-12-19"),
-      },
-      {
-        id: "e9a6d1f8",
-        nomeProduto: "Webcam Logitech C920",
-        codigoBarras: "7891234567896",
-        quantidade: 3,
-        imagemUrl: "https://placehold.co/600x400",
-        ativo: true,
-        dataCriacao: new Date("2024-07-03"),
-        dataAtualizacao: new Date("2024-12-21"),
-      },
-      {
-        id: "f1c8e3a9",
-        nomeProduto: "SSD Kingston NV2 1TB",
-        codigoBarras: "7891234567897",
-        quantidade: 18,
-        imagemUrl: undefined,
-        ativo: true,
-        dataCriacao: new Date("2024-08-15"),
-        dataAtualizacao: new Date("2024-12-23"),
-      },
-    ];
-  }
+  // Usar Zustand ao invés de estado local
+  const {
+    produtos,
+    loading,
+    error,
+    produtosAtivos,
+    produtosBaixoEstoque,
+    totalProdutos,
+    carregarProdutos,
+    buscarProdutos,
+  } = useProdutos();
 
   useEffect(() => {
-    getData().then((data) => {
-      setData(data);
-    });
-  });
+    carregarProdutos();
+  }, [carregarProdutos]);
+
+  // Filtrar dados baseado na busca e filtro de status
+  const filteredData = useMemo(() => {
+    let filtered = produtos;
+
+    // Filtro por busca
+    if (searchValue) {
+      filtered = buscarProdutos(searchValue);
+    }
+
+    // Filtro por status
+    switch (statusFilter) {
+      case "active":
+        filtered = filtered.filter((produto) => produto.ativo);
+        break;
+      case "inactive":
+        filtered = filtered.filter((produto) => !produto.ativo);
+        break;
+      case "no-stock":
+        filtered = filtered.filter((produto) => produto.quantidade === 0);
+        break;
+      default:
+        break;
+    }
+
+    // Mapear para o formato esperado pelos componentes
+    return filtered.map((produto) => ({
+      id: produto.id,
+      nome: produto.nome,
+      codigoBarras: produto.codigoBarras,
+      quantidade: produto.quantidade,
+      imagemUrl: produto.imagemUrl,
+      ativo: produto.ativo,
+      createdAt: produto.createdAt,
+      updatedAt: produto.updatedAt,
+    }));
+  }, [produtos, searchValue, statusFilter, buscarProdutos]);
+
+  // Estatísticas usando dados do Zustand
+  const stats = useMemo(() => {
+    return {
+      total: totalProdutos,
+      ativos: produtosAtivos.length,
+      baixoEstoque: produtosBaixoEstoque.length,
+    };
+  }, [totalProdutos, produtosAtivos.length, produtosBaixoEstoque.length]);
+
+  console.log("EstoquePageWithZustand - Debug completo:");
+  console.log("- produtos carregados:", produtos.length);
+  console.log("- produtosAtivos:", produtosAtivos.length);
+  console.log("- produtosBaixoEstoque:", produtosBaixoEstoque.length);
+  console.log("- stats calculado:", stats);
+
+  // Se houver erro, exibir mensagem
+  if (error) {
+    return (
+      <TableLayout
+        title="Estoque"
+        description="Gerencie seus produtos e controle o estoque"
+      >
+        <div className="flex flex-col items-center justify-center h-64">
+          <AlertTriangle className="h-12 w-12 text-destructive mb-4" />
+          <h3 className="text-lg font-semibold">Erro ao carregar produtos</h3>
+          <p className="text-muted-foreground mb-4">{error}</p>
+          <Button onClick={carregarProdutos}>Tentar Novamente</Button>
+        </div>
+      </TableLayout>
+    );
+  }
 
   return (
-    <PageLayout
-      title="Gestão de Estoque"
-      description="Controle e monitoramento do seu estoque de produtos"
+    <TableLayout
+      title="Estoque"
+      description="Gerencie seus produtos e controle o estoque"
+      size="full"
       actions={
-        <>
-          <XMLImportDialog onImport={(data) => console.log(data)} />
-          <Button
-            variant="default"
-            onClick={() => navigate("/estoque/produtos/novo")}
-            className="ml-2"
-          >
-            Adicionar Produto
+        <div className="flex gap-2">
+          <XMLImportDialog />
+          <Button onClick={() => navigate("/estoque/produtos/novo")}>
+            Novo Produto
           </Button>
-        </>
+        </div>
       }
     >
-      <div className="container mx-auto py-10">
-        <DataTable columns={columns} data={data} />
+      <div className="space-y-6">
+        {/* Cards de Estatísticas */}
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                Total de Produtos
+              </CardTitle>
+              <Package className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              {loading ? (
+                <Skeleton className="h-8 w-16" />
+              ) : (
+                <div className="text-2xl font-bold">{stats.total}</div>
+              )}
+              <p className="text-xs text-muted-foreground">
+                +{stats.ativos} ativos no estoque
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                Produtos Ativos
+              </CardTitle>
+              <TrendingUp className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              {loading ? (
+                <Skeleton className="h-8 w-16" />
+              ) : (
+                <div className="text-2xl font-bold">{stats.ativos}</div>
+              )}
+              <p className="text-xs text-muted-foreground">
+                Disponíveis para venda
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                Baixo Estoque
+              </CardTitle>
+              <AlertTriangle className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              {loading ? (
+                <Skeleton className="h-8 w-16" />
+              ) : (
+                <>
+                  <div className="text-2xl font-bold">{stats.baixoEstoque}</div>
+                  {stats.baixoEstoque > 0 && (
+                    <Badge variant="destructive" className="text-xs">
+                      Atenção necessária
+                    </Badge>
+                  )}
+                </>
+              )}
+              <p className="text-xs text-muted-foreground">
+                Abaixo do estoque mínimo
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Toolbar e Tabela de Produtos */}
+        <div className="space-y-4">
+          <TableToolbar
+            searchValue={searchValue}
+            onSearchChange={setSearchValue}
+            statusFilter={statusFilter}
+            onStatusFilter={setStatusFilter}
+            resultsCount={filteredData.length}
+            totalCount={totalProdutos}
+          />
+
+          <div className="rounded-md border">
+            <DataTable columns={columns} data={filteredData} />
+          </div>
+        </div>
       </div>
-    </PageLayout>
+    </TableLayout>
   );
 }

@@ -1,11 +1,8 @@
-import { AppSidebar } from "@/components/app-sidebar"
-import {
-  SidebarInset,
-  SidebarProvider,
-} from "@/shared/components/ui/sidebar"
-import { Outlet } from "react-router-dom"
+import { AppSidebar } from "@/shared/components/navigation/app-sidebar";
+import { SidebarInset, SidebarProvider } from "@/shared/components/ui/sidebar";
+import { Outlet } from "react-router-dom";
 
-export const iframeHeight = "800px"
+export const iframeHeight = "800px";
 export function AppLayout() {
   return (
     <div className="[--header-height:calc(--spacing(14))]">
@@ -20,5 +17,5 @@ export function AppLayout() {
         </div>
       </SidebarProvider>
     </div>
-  )
+  );
 }

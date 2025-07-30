@@ -15,17 +15,13 @@ export function ProductActions({ produto }: ProductActionsProps) {
   };
 
   const handleDelete = () => {
-    if (
-      confirm(
-        `Tem certeza que deseja deletar o produto: ${produto.nomeProduto}?`
-      )
-    ) {
-      alert(`Produto deletado: ${produto.nomeProduto}`);
+    if (confirm(`Tem certeza que deseja deletar o produto: ${produto.nome}?`)) {
+      alert(`Produto deletado: ${produto.nome}`);
     }
   };
 
   // const handleView = () => {
-  //   alert(`Visualizando produto: ${produto.nomeProduto}`);
+  //   alert(`Visualizando produto: ${produto.nome}`);
   // };
 
   return (

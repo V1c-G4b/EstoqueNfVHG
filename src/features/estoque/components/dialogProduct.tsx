@@ -11,8 +11,10 @@ import {
 } from "@/shared/components/ui/dialog";
 import { Input } from "@/shared/components/ui/input";
 import { Label } from "@/shared/components/ui/label";
+import { mapNFe } from "@/shared/utils/xml";
 import { useState } from "react";
 import { toast } from "sonner";
+import { ElementCompact, xml2js } from "xml-js";
 
 interface XMLImportDialogProps {
   onImport?: (data: { file?: File; url?: string }) => void;
@@ -38,8 +40,6 @@ export function XMLImportDialog({ onImport }: XMLImportDialogProps) {
       const data = file ? { file } : { url: url.trim() };
       onImport?.(data);
 
-      console.log("Importing data:", data);
-
       setFile(null);
       setUrl("");
       setIsOpen(false);
@@ -52,11 +52,22 @@ export function XMLImportDialog({ onImport }: XMLImportDialogProps) {
     }
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
       setFile(selectedFile);
       setUrl("");
+
+      try {
+        const fileContent = await selectedFile.text();
+        const nfeJsObject = xml2js(fileContent, { compact: true, alwaysArray: false }) as ElementCompact;
+
+        const nfeMapead = mapNFe(nfeJsObject);
+        console.log("NFe mapeada:", nfeMapead);
+
+      } catch (error) {
+        console.error("Erro ao ler o arquivo:", error);
+      }
     }
   };
 

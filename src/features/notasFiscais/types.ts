@@ -1,4 +1,3 @@
-// Tipagens para notas fiscais
 export interface NotaFiscal {
   id: string;
   numero: string;

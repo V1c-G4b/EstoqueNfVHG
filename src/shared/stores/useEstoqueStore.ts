@@ -3,13 +3,11 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
 interface EstoqueState {
-  // Estados
   produtos: Produto[];
   movimentacoes: MovimentacaoEstoque[];
   loading: boolean;
   error: string | null;
 
-  // Filtros persistidos
   filters: {
     categoria?: string;
     fornecedor?: string;
@@ -17,34 +15,27 @@ interface EstoqueState {
     search?: string;
   };
 
-  // Seletores computados
   produtosAtivos: () => Produto[];
   produtosBaixoEstoque: () => Produto[];
   totalProdutos: () => number;
 
-  // Ações de produtos
   setProdutos: (produtos: Produto[]) => void;
   addProduto: (produto: Produto) => void;
   updateProduto: (id: string, dados: Partial<Produto>) => void;
   removeProduto: (id: string) => void;
 
-  // Ações de movimentações
   setMovimentacoes: (movimentacoes: MovimentacaoEstoque[]) => void;
   addMovimentacao: (movimentacao: MovimentacaoEstoque) => void;
 
-  // Ações de filtros
   setFilters: (filters: Partial<EstoqueState["filters"]>) => void;
   clearFilters: () => void;
 
-  // Ações de estado
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
 
-  // Ações de busca/filtro
   buscarProdutos: (query: string) => Produto[];
   filtrarPorCategoria: (categoria: string) => Produto[];
 
-  // Reset
   reset: () => void;
 }
 
@@ -64,7 +55,7 @@ export const useEstoqueStore = create<EstoqueState>()(
 
       produtosBaixoEstoque: () =>
         get().produtos.filter(
-          (produto) => produto.ativo && produto.quantidade <= 10 // Estoque mínimo fixo de 10
+          (produto) => produto.ativo && produto.quantidade <= 10 
         ),
 
       totalProdutos: () => get().produtos.length,
@@ -126,7 +117,6 @@ export const useEstoqueStore = create<EstoqueState>()(
 
       filtrarPorCategoria: (_categoria) => {
         const { produtos } = get();
-        // Como removemos categoria, retorna todos os produtos independente do filtro
         return produtos;
       },
 

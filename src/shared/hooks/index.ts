@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
 
-// Re-exportar hooks das stores
 export { useAuth } from "./useAuth";
 export {
   useAlertasDashboard,

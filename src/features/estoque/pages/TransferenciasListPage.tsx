@@ -20,7 +20,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { TransferenciaEstoque } from "../types";
 
-// Mock data - em um app real, viria de uma API
 const mockTransferencias: TransferenciaEstoque[] = [
   {
     id: "1",
@@ -189,7 +188,6 @@ export function TransferenciasListPage() {
       }
     >
       <div className="space-y-6">
-        {/* Filtros */}
         <Card>
           <CardHeader>
             <CardTitle className="text-lg">Filtros</CardTitle>
@@ -222,7 +220,6 @@ export function TransferenciasListPage() {
           </CardContent>
         </Card>
 
-        {/* Lista de Transferências */}
         <div className="space-y-4">
           {filteredTransferencias.length === 0 ? (
             <Card>

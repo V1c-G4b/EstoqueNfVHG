@@ -19,7 +19,7 @@ export const PAGINATION = {
 
 export const VALIDATION = {
   MIN_PASSWORD_LENGTH: 6,
-  MAX_FILE_SIZE: 5 * 1024 * 1024, // 5MB
+  MAX_FILE_SIZE: 5 * 1024 * 1024,
   ACCEPTED_IMAGE_TYPES: ["image/jpeg", "image/jpg", "image/png", "image/webp"],
   SKU_PATTERN: /^[A-Z0-9-]+$/,
 } as const;

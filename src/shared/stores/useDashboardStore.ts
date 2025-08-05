@@ -4,7 +4,6 @@ import { useAuthStore } from "./useAuthStore";
 import { useEstoqueStore } from "./useEstoqueStore";
 import { useNotasFiscaisStore } from "./useNotasFiscaisStore";
 
-// Tipos para os dados do dashboard
 interface MovimentacaoMensal {
   mes: string;
   entradas: number;
@@ -45,18 +44,15 @@ interface AlertaEstoque {
 }
 
 interface DashboardState {
-  // Estados principais
   loading: boolean;
   error: string | null;
   ultimaAtualizacao: string | null;
 
-  // Dados agregados
   movimentacoesMensais: MovimentacaoMensal[];
   atividadesRecentes: AtividadeRecente[];
   estatisticasPeriodo: EstatisticasPeriodo | null;
   alertasEstoque: AlertaEstoque[];
 
-  // Resumo geral - dados calculados em tempo real
   resumoGeral: () => {
     totalProdutos: number;
     totalProdutosAtivos: number;
@@ -68,7 +64,6 @@ interface DashboardState {
     usuariosAtivos: number;
   };
 
-  // Métricas de performance
   metricas: () => {
     crescimentoProdutos: number;
     crescimentoFaturamento: number;
@@ -76,7 +71,6 @@ interface DashboardState {
     ticketMedio: number;
   };
 
-  // Ações
   carregarDadosDashboard: () => Promise<void>;
   atualizarMovimentacoesMensais: () => void;
   adicionarAtividadeRecente: (
@@ -88,7 +82,6 @@ interface DashboardState {
   ) => Promise<void>;
   atualizarAlertasEstoque: () => void;
 
-  // Filtros e configurações
   filtrosPeriodo: {
     periodo: "7d" | "30d" | "90d" | "1y";
     dataInicio?: string;
@@ -96,11 +89,9 @@ interface DashboardState {
   };
   setFiltrosPeriodo: (filtros: DashboardState["filtrosPeriodo"]) => void;
 
-  // Ações de estado
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
 
-  // Reset
   reset: () => void;
 }
 
@@ -132,10 +123,9 @@ export const useDashboardStore = create<DashboardState>()(
           totalProdutosAtivos: estoqueState.produtosAtivos().length,
           totalNotasFiscais: notasState.notasFiscais.length,
           notasAutorizadas: notasState.notasAutorizadas().length,
-          valorTotalEstoque: estoqueState.valorTotalEstoque(),
           faturamentoMensal: notasState.valorTotalFaturado(),
           produtosBaixoEstoque: estoqueState.produtosBaixoEstoque().length,
-          usuariosAtivos: authState.user ? 1 : 0, 
+          usuariosAtivos: authState.user ? 1 : 0,
         };
       },
 
@@ -255,7 +245,6 @@ export const useDashboardStore = create<DashboardState>()(
       },
 
       atualizarMovimentacoesMensais: () => {
-
         const { movimentacoesMensais } = get();
 
         set(
@@ -349,11 +338,11 @@ export const useDashboardStore = create<DashboardState>()(
             produtoId: produto.id,
             produtoNome: produto.nome,
             quantidadeAtual: produto.quantidade,
-            estoqueMinimo: produto.estoqueMinimo,
+            estoqueMinimo: 3,
             severidade:
               produto.quantidade === 0
                 ? "zerado"
-                : produto.quantidade <= produto.estoqueMinimo * 0.5
+                : produto.quantidade <= 3 * 0.5
                 ? "critico"
                 : "baixo",
           })

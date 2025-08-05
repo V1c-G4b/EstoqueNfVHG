@@ -12,24 +12,20 @@ interface TableLoadingProps {
 export function TableLoading({ rows = 5, columns = 6 }: TableLoadingProps) {
   return (
     <div className="space-y-4">
-      {/* Header loading */}
-      <div className="flex items-center gap-4">
+      <div className="flex flex-col space-y-3">
         <Skeleton className="h-10 w-48" />
         <Skeleton className="h-10 w-32" />
         <Skeleton className="h-10 w-24" />
       </div>
 
-      {/* Table loading */}
       <div className="rounded-md border">
         <div className="p-4 space-y-3">
-          {/* Table header */}
           <div className="flex gap-4">
             {Array.from({ length: columns }).map((_, index) => (
               <Skeleton key={`header-${index}`} className="h-4 flex-1" />
             ))}
           </div>
 
-          {/* Table rows */}
           {Array.from({ length: rows }).map((_, rowIndex) => (
             <div key={`row-${rowIndex}`} className="flex gap-4">
               {Array.from({ length: columns }).map((_, colIndex) => (

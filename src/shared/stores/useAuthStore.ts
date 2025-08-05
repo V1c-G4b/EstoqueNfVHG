@@ -113,18 +113,15 @@ export const useAuthStore = create<AuthState>()(
           if (!token) return;
 
           try {
-            // Simular refresh do token
             await new Promise((resolve) => setTimeout(resolve, 1000));
             const newToken =
               "refreshed-jwt-token-" + Math.random().toString(36);
             set({ token: newToken }, false, "refreshToken");
           } catch (error) {
-            // Se falhar o refresh, fazer logout
             set(initialState, false, "refreshToken:error");
           }
         },
 
-        // Ações de usuário
         updateUser: (userData) =>
           set(
             (state) => ({
@@ -134,11 +131,9 @@ export const useAuthStore = create<AuthState>()(
             "updateUser"
           ),
 
-        // Ações de estado
         setLoading: (isLoading) => set({ isLoading }, false, "setLoading"),
         setError: (error) => set({ error }, false, "setError"),
 
-        // Verificações
         hasRole: (role) => {
           const { user } = get();
           return user?.role === role;
@@ -154,20 +149,19 @@ export const useAuthStore = create<AuthState>()(
           return user?.role === "manager" || user?.role === "admin";
         },
 
-        // Reset
         reset: () => set(initialState, false, "reset"),
       }),
       {
-        name: "auth-store", // nome para o localStorage
+        name: "auth-store", 
         partialize: (state) => ({
           user: state.user,
           token: state.token,
           isAuthenticated: state.isAuthenticated,
-        }), // apenas persistir dados importantes
+        }), 
       }
     ),
     {
-      name: "auth-store", // nome para o Redux DevTools
+      name: "auth-store",
     }
   )
 );

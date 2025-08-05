@@ -13,7 +13,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { Produto, UnidadeEstoque } from "../types";
 
-// Mock data - em um app real, viria de uma API
 const mockUnidades: UnidadeEstoque[] = [
   {
     id: "1",
@@ -96,7 +95,6 @@ export function TransferenciaEstoquePage() {
     e.preventDefault();
     setLoading(true);
 
-    // Simular API call
     setTimeout(() => {
       setLoading(false);
       navigate("/estoque/transferencias");

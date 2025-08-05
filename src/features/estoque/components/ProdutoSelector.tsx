@@ -1,4 +1,3 @@
-import { Badge } from "@/shared/components/ui/badge";
 import { Button } from "@/shared/components/ui/button";
 import {
   Card,
@@ -27,10 +26,8 @@ export function ProdutoSelector({
   const [searchTerm, setSearchTerm] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
-  const filteredProdutos = produtos.filter(
-    (produto) =>
-      produto.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      produto.sku.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredProdutos = produtos.filter((produto) =>
+    produto.nome.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleSelect = (produto: Produto) => {
@@ -56,12 +53,8 @@ export function ProdutoSelector({
                 <div>
                   <h4 className="font-medium">{selectedProduto.nome}</h4>
                   <div className="flex items-center gap-2 mt-1">
-                    <Badge variant="outline" className="text-xs">
-                      {selectedProduto.sku}
-                    </Badge>
                     <span className="text-sm text-muted-foreground">
                       Estoque: {selectedProduto.quantidade}{" "}
-                      {selectedProduto.unidadeMedida}
                     </span>
                   </div>
                 </div>
@@ -113,12 +106,8 @@ export function ProdutoSelector({
                       <div className="text-left flex-1">
                         <div className="font-medium">{produto.nome}</div>
                         <div className="flex items-center gap-2 mt-1">
-                          <Badge variant="outline" className="text-xs">
-                            {produto.sku}
-                          </Badge>
                           <span className="text-xs text-muted-foreground">
                             Estoque: {produto.quantidade}{" "}
-                            {produto.unidadeMedida}
                           </span>
                         </div>
                       </div>

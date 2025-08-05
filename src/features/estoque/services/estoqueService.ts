@@ -21,7 +21,6 @@ class EstoqueServiceClass extends BaseApiService {
     super("/api/estoque");
   }
 
-  // Produtos
   async getProdutos(
     page = 1,
     limit = 10,
@@ -72,7 +71,6 @@ class EstoqueServiceClass extends BaseApiService {
     });
   }
 
-  // Movimentações
   async getMovimentacoes(
     page = 1,
     limit = 10,
@@ -103,7 +101,6 @@ class EstoqueServiceClass extends BaseApiService {
     return response.data;
   }
 
-  // Relatórios
   async getRelatorioEstoque(): Promise<{
     totalProdutos: number;
     valorTotal: number;

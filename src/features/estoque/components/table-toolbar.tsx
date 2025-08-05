@@ -51,8 +51,7 @@ export function TableToolbar({
 
   return (
     <div className="space-y-4">
-      {/* Barra de busca e filtros */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex items-center justify-between">
         <form
           onSubmit={handleSearchSubmit}
           className="flex flex-1 items-center gap-2 max-w-sm"
@@ -139,7 +138,6 @@ export function TableToolbar({
         </div>
       </div>
 
-      {/* Contador de resultados */}
       <div className="flex items-center justify-between text-sm text-muted-foreground">
         <div>
           Mostrando {resultsCount} de {totalCount} produto

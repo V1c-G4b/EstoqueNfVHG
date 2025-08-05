@@ -58,7 +58,6 @@ export function useTransferencias() {
     setLoading(true);
     setError(null);
     try {
-      // Simular chamada da API
       await new Promise((resolve) => setTimeout(resolve, 1000));
       setTransferencias(mockTransferencias);
     } catch (err) {
@@ -72,7 +71,6 @@ export function useTransferencias() {
     setLoading(true);
     setError(null);
     try {
-      // Simular chamada da API
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
       const newTransferencia: TransferenciaEstoque = {
@@ -98,7 +96,6 @@ export function useTransferencias() {
     setLoading(true);
     setError(null);
     try {
-      // Simular chamada da API
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
       setTransferencias((prev) =>
@@ -126,7 +123,6 @@ export function useTransferencias() {
     setLoading(true);
     setError(null);
     try {
-      // Simular chamada da API
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
       setTransferencias((prev) =>
@@ -154,7 +150,6 @@ export function useTransferencias() {
     setLoading(true);
     setError(null);
     try {
-      // Simular chamada da API
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
       setTransferencias((prev) =>

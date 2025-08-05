@@ -23,7 +23,6 @@ export function ProductTableContainer() {
 
   const { produtos, loading, removerProduto } = useProdutos();
 
-  // Transformar dados para o formato da tabela
   const tableData: ProdutoTableItem[] = useMemo(
     () =>
       produtos.map((produto) => ({
@@ -38,8 +37,6 @@ export function ProductTableContainer() {
       })),
     [produtos]
   );
-
-  // Handlers para ações da tabela
   const handleEdit = useCallback(
     (id: string) => {
       navigate(`/estoque/produtos/editar/${id}`);
@@ -82,7 +79,6 @@ export function ProductTableContainer() {
     [produtos, removerProduto, handleError, confirmWithNative]
   );
 
-  // Criar colunas com handlers
   const columns = useMemo(
     () =>
       createProductColumns(handleEdit, handleView, handleDelete, deletingIds),

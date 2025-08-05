@@ -36,7 +36,6 @@ export function NovaUnidadeEstoquePage() {
 
   useEffect(() => {
     if (isEdit && id) {
-      // Em um app real, carregaria os dados da API
       setFormData({
         nome: "Depósito Central",
         descricao: "Depósito principal da empresa",
@@ -51,7 +50,6 @@ export function NovaUnidadeEstoquePage() {
     e.preventDefault();
     setLoading(true);
 
-    // Simular API call
     setTimeout(() => {
       setLoading(false);
       navigate("/estoque/unidades");

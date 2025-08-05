@@ -21,7 +21,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { UnidadeEstoque } from "../types";
 
-// Mock data - em um app real, viria de uma API
 const mockUnidades: UnidadeEstoque[] = [
   {
     id: "1",
@@ -101,7 +100,6 @@ export function UnidadesEstoquePage() {
       }
     >
       <div className="space-y-6">
-        {/* Filtros */}
         <Card>
           <CardHeader>
             <CardTitle className="text-lg">Filtros</CardTitle>
@@ -132,7 +130,6 @@ export function UnidadesEstoquePage() {
           </CardContent>
         </Card>
 
-        {/* Lista de Unidades */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredUnidades.length === 0 ? (
             <div className="col-span-full">
@@ -234,7 +231,6 @@ export function UnidadesEstoquePage() {
           )}
         </div>
 
-        {/* Estatísticas */}
         {filteredUnidades.length > 0 && (
           <Card>
             <CardHeader>

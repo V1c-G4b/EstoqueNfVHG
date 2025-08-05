@@ -21,7 +21,6 @@ export const useProdutos = () => {
   const carregarProdutos = useCallback(async () => {
     useEstoqueStore.getState().setLoading(true);
     try {
-      // Simular carregamento de produtos
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
       const produtosMock: Produto[] = [
@@ -160,7 +159,6 @@ export const useMovimentacoes = () => {
   const carregarMovimentacoes = useCallback(async () => {
     useEstoqueStore.getState().setLoading(true);
     try {
-      // Simular carregamento de movimentações
       await new Promise((resolve) => setTimeout(resolve, 800));
       setMovimentacoes([]);
     } catch (error) {
@@ -171,12 +169,10 @@ export const useMovimentacoes = () => {
   }, [setMovimentacoes]);
 
   return {
-    // Estado
     movimentacoes,
     loading,
     error,
 
-    // Ações
     carregarMovimentacoes,
     adicionarMovimentacao: addMovimentacao,
   };

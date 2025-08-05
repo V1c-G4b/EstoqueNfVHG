@@ -27,7 +27,6 @@ export const useNotasFiscais = () => {
   const carregarNotasFiscais = useCallback(async () => {
     useNotasFiscaisStore.getState().setLoading(true);
     try {
-      // Simular carregamento de notas fiscais
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
       const notasMock: NotaFiscal[] = [
@@ -459,8 +458,7 @@ export const useClientes = () => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 800));
 
-      const clientesMock: Cliente[] = [
-      ];
+      const clientesMock: Cliente[] = [];
 
       setClientes(clientesMock);
     } catch (error) {

@@ -50,7 +50,6 @@ interface NotasFiscaisState {
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
 
-  // Ações de busca/filtro
   buscarNotasPorCliente: (clienteId: string) => NotaFiscal[];
   buscarNotasPorStatus: (status: NotaFiscal["status"]) => NotaFiscal[];
   buscarNotasPorPeriodo: (dataInicio: string, dataFim: string) => NotaFiscal[];

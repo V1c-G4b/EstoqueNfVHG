@@ -24,7 +24,6 @@ export function EstoquePage() {
   >("all");
   const navigate = useNavigate();
 
-  // Usar Zustand ao invés de estado local
   const {
     produtos,
     loading,
@@ -40,16 +39,13 @@ export function EstoquePage() {
     carregarProdutos();
   }, [carregarProdutos]);
 
-  // Filtrar dados baseado na busca e filtro de status
   const filteredData = useMemo(() => {
     let filtered = produtos;
 
-    // Filtro por busca
     if (searchValue) {
       filtered = buscarProdutos(searchValue);
     }
 
-    // Filtro por status
     switch (statusFilter) {
       case "active":
         filtered = filtered.filter((produto) => produto.ativo);
@@ -64,7 +60,6 @@ export function EstoquePage() {
         break;
     }
 
-    // Mapear para o formato esperado pelos componentes
     return filtered.map((produto) => ({
       id: produto.id,
       nome: produto.nome,
@@ -77,7 +72,6 @@ export function EstoquePage() {
     }));
   }, [produtos, searchValue, statusFilter, buscarProdutos]);
 
-  // Estatísticas usando dados do Zustand
   const stats = useMemo(() => {
     return {
       total: totalProdutos,
@@ -86,13 +80,6 @@ export function EstoquePage() {
     };
   }, [totalProdutos, produtosAtivos.length, produtosBaixoEstoque.length]);
 
-  console.log("EstoquePageWithZustand - Debug completo:");
-  console.log("- produtos carregados:", produtos.length);
-  console.log("- produtosAtivos:", produtosAtivos.length);
-  console.log("- produtosBaixoEstoque:", produtosBaixoEstoque.length);
-  console.log("- stats calculado:", stats);
-
-  // Se houver erro, exibir mensagem
   if (error) {
     return (
       <TableLayout
@@ -117,6 +104,18 @@ export function EstoquePage() {
       actions={
         <div className="flex gap-2">
           <XMLImportDialog />
+          <Button
+            variant={"secondary"}
+            onClick={() => navigate("/estoque/produtos/novo")}
+          >
+            Consultar Chave
+          </Button>
+          <Button
+            variant={"secondary"}
+            onClick={() => navigate("/estoque/produtos/novo")}
+          >
+            Consultar lista...
+          </Button>
           <Button onClick={() => navigate("/estoque/produtos/novo")}>
             Novo Produto
           </Button>
@@ -124,7 +123,6 @@ export function EstoquePage() {
       }
     >
       <div className="space-y-6">
-        {/* Cards de Estatísticas */}
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -191,7 +189,6 @@ export function EstoquePage() {
           </Card>
         </div>
 
-        {/* Toolbar e Tabela de Produtos */}
         <div className="space-y-4">
           <TableToolbar
             searchValue={searchValue}

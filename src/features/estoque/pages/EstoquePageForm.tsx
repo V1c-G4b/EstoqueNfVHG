@@ -20,7 +20,7 @@ import { Label } from "@/shared/components/ui/label";
 import { Switch } from "@/shared/components/ui/switch";
 import { Image as ImageIcon, X } from "lucide-react";
 
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = [
   "image/jpeg",
   "image/jpg",
@@ -64,12 +64,10 @@ export function EstoquePageForm() {
     },
   });
 
-  // Simular busca de dados para edição
   useEffect(() => {
     if (isEditing && id) {
       setIsLoading(true);
-      // TODO: Implementar busca do produto por ID
-      // Simulando uma API call
+
       setTimeout(() => {
         const mockProduct = {
           nome: "Produto Exemplo",
@@ -86,7 +84,6 @@ export function EstoquePageForm() {
     }
   }, [isEditing, id, form]);
 
-  // Converter arquivo para Base64
   const convertToBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -96,7 +93,6 @@ export function EstoquePageForm() {
     });
   };
 
-  // Upload de imagem local e simulação de storage
   const handleImageUpload = async (file: File) => {
     if (!ACCEPTED_IMAGE_TYPES.includes(file.type)) {
       alert("Tipo de arquivo não suportado. Use JPEG, PNG ou WebP.");
@@ -110,17 +106,12 @@ export function EstoquePageForm() {
 
     setUploadingImage(true);
     try {
-      // Converter para Base64 para preview local
       const base64 = await convertToBase64(file);
       setImagePreview(base64);
-
-      // Simulando upload para storage (seria aqui que você faria upload real)
-      // Por enquanto, vamos usar a URL do preview
       const mockStorageUrl = `https://storage.example.com/produtos/${Date.now()}_${
         file.name
       }`;
 
-      // Simulando delay de upload
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
       form.setValue("imagemUrl", mockStorageUrl);
@@ -142,7 +133,6 @@ export function EstoquePageForm() {
     setIsLoading(true);
 
     try {
-      // Adicionar timestamps
       const productData = {
         ...values,
         dataCriacao: isEditing ? undefined : new Date(),
@@ -154,18 +144,14 @@ export function EstoquePageForm() {
 
       if (isEditing) {
         console.log("Atualizando produto ID:", id);
-        // TODO: Implementar API de atualização
-        await new Promise((resolve) => setTimeout(resolve, 2000)); // Simular API call
+        await new Promise((resolve) => setTimeout(resolve, 2000));
       } else {
         console.log("Criando novo produto");
-        // TODO: Implementar API de criação
-        await new Promise((resolve) => setTimeout(resolve, 2000)); // Simular API call
+        await new Promise((resolve) => setTimeout(resolve, 2000));
       }
 
-      // Feedback de sucesso
       alert(`Produto ${isEditing ? "atualizado" : "criado"} com sucesso!`);
 
-      // Redirecionar de volta para a lista
       navigate("/estoque/produtos");
     } catch (error) {
       console.error("Erro ao salvar produto:", error);
@@ -198,7 +184,6 @@ export function EstoquePageForm() {
       maxWidth="full"
     >
       <div className="container max-w-6xl mx-auto py-6">
-        {/* Header Section */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
             {isEditing ? "Editar Produto" : "Novo Produto"}
@@ -212,13 +197,11 @@ export function EstoquePageForm() {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            {/* Informações Básicas */}
             <div className="bg-white rounded-lg border shadow-sm p-6 space-y-6">
               <h2 className="text-xl font-semibold text-gray-900 border-b pb-3">
                 Informações Básicas
               </h2>
 
-              {/* Nome do Produto */}
               <FormField
                 control={form.control}
                 name="nome"
@@ -242,7 +225,6 @@ export function EstoquePageForm() {
                 )}
               />
 
-              {/* Código de Barras */}
               <FormField
                 control={form.control}
                 name="codigoBarras"
@@ -267,7 +249,6 @@ export function EstoquePageForm() {
               />
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Quantidade */}
                 <FormField
                   control={form.control}
                   name="quantidade"
@@ -295,7 +276,6 @@ export function EstoquePageForm() {
                   )}
                 />
 
-                {/* Status Ativo */}
                 <FormField
                   control={form.control}
                   name="ativo"
@@ -323,14 +303,12 @@ export function EstoquePageForm() {
               </div>
             </div>
 
-            {/* Upload de Imagem */}
             <div className="bg-white rounded-lg border shadow-sm p-6 space-y-6">
               <h2 className="text-xl font-semibold text-gray-900 border-b pb-3">
                 Imagem do Produto
               </h2>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Preview da Imagem */}
                 <div className="space-y-4">
                   {imagePreview && (
                     <div className="space-y-2">
@@ -354,7 +332,6 @@ export function EstoquePageForm() {
                   )}
                 </div>
 
-                {/* Upload Input */}
                 <div className="space-y-2">
                   <Label className="text-sm font-medium text-gray-700">
                     Selecionar Imagem
@@ -398,7 +375,6 @@ export function EstoquePageForm() {
               </div>
             </div>
 
-            {/* Botões de Ação */}
             <div className="bg-white rounded-lg border shadow-sm p-6">
               <div className="flex flex-col sm:flex-row gap-4 justify-end">
                 <Button

@@ -1,7 +1,7 @@
 import { CardChart } from "@/features/dashboard/components/cardChart";
 import { useProdutos } from "@/shared/hooks";
 import { useEstoqueMetrics } from "@/shared/hooks/useEstoqueMetrics";
-import { AlertTriangle, Archive, Package, TrendingUp } from "lucide-react";
+import { AlertTriangle, Archive, Package } from "lucide-react";
 import { useMemo } from "react";
 
 type StatCardVariant = "default" | "success" | "warning" | "danger";
@@ -36,13 +36,6 @@ export function EstoqueStatsContainer() {
         description: `${metrics.totalAtivos} ativos, ${metrics.totalInativos} inativos`,
         icon: <Package className="h-4 w-4 text-muted-foreground" />,
         variant: "default",
-      },
-      {
-        title: "Valor Total do Estoque",
-        value: metrics.valorTotalEstoque,
-        description: `Baseado em ${metrics.totalAtivos} produtos ativos`,
-        icon: <TrendingUp className="h-4 w-4 text-muted-foreground" />,
-        variant: metrics.valorTotalEstoque > 0 ? "success" : "default",
       },
       {
         title: "Produtos com Baixo Estoque",

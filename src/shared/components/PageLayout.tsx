@@ -34,7 +34,6 @@ export function PageLayout({
     full: "max-w-none",
   };
 
-  // Variant classes
   const variantClasses = {
     default: "bg-gray-50/50 border border-gray-200/60",
     minimal: "bg-transparent",

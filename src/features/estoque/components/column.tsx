@@ -1,10 +1,6 @@
 import { type ColumnDef } from "@tanstack/react-table";
-import type { Produto } from "../types";
+import { type Produto } from "../types";
 import { ProductActions } from "./product-actions";
-
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-export type { Produto };
 
 export const columns: ColumnDef<Produto>[] = [
   {
@@ -18,22 +14,6 @@ export const columns: ColumnDef<Produto>[] = [
   {
     accessorKey: "quantidade",
     header: "Quantidade",
-  },
-  {
-    accessorKey: "imagemUrl",
-    header: "Imagem",
-    cell: ({ row }) => {
-      const imagemUrl = row.getValue("imagemUrl") as string;
-      return imagemUrl ? (
-        <img
-          src={imagemUrl}
-          alt="Produto"
-          className="h-10 w-10 object-cover rounded"
-        />
-      ) : (
-        <span className="text-gray-400">Sem imagem</span>
-      );
-    },
   },
   {
     accessorKey: "ativo",
@@ -52,18 +32,18 @@ export const columns: ColumnDef<Produto>[] = [
     },
   },
   {
-    accessorKey: "dataCriacao",
+    accessorKey: "createdAt",
     header: "Data de Criação",
     cell: ({ row }) => {
-      const data = row.getValue("dataCriacao") as Date;
+      const data = row.getValue("createdAt") as Date;
       return new Date(data).toLocaleDateString("pt-BR");
     },
   },
   {
-    accessorKey: "dataAtualizacao",
+    accessorKey: "updatedAt",
     header: "Última Atualização",
     cell: ({ row }) => {
-      const data = row.getValue("dataAtualizacao") as Date;
+      const data = row.getValue("updatedAt") as Date;
       return new Date(data).toLocaleDateString("pt-BR");
     },
   },

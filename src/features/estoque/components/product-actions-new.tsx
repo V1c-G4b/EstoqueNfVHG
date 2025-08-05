@@ -1,6 +1,6 @@
 import { Button } from "@/shared/components/ui/button";
 import { Eye, Trash2 } from "lucide-react";
-import type { Produto } from "./column";
+import type { Produto } from "../types";
 
 interface ProductActionsProps {
   produto: Produto;

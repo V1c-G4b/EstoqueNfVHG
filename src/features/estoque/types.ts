@@ -1,13 +1,12 @@
-// Tipagens para produtos
 export interface Produto {
   id: string;
   nome: string;
-  codigoBarras: string; // Campo único e obrigatório
+  codigoBarras: string; 
   quantidade: number;
-  imagemUrl?: string; // URL da imagem armazenada
+  imagemUrl?: string; 
   ativo: boolean;
-  createdAt: string; // Data de criação automática
-  updatedAt: string; // Data de atualização automática
+  createdAt: string; 
+  updatedAt: string; 
 }
 
 export interface MovimentacaoEstoque {

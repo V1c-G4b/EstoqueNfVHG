@@ -1,9 +1,5 @@
 import { type ElementCompact } from "xml-js";
 
-// =============================================================================
-// 1. DEFINIÇÃO DAS INTERFACES (MODELS)
-// =============================================================================
-
 interface IEndereco {
   logradouro: string;
   numero: string;
@@ -93,12 +89,9 @@ interface INFe {
   infNFe: IInfNFe;
 }
 
-
 export function mapNFe(nfeObj: ElementCompact): INFe {
   const infNFe = nfeObj.enviNFe.NFe.infNFe;
 
-  // O parser pode retornar um único item como objeto e múltiplos como array.
-  // Garantimos que 'det' (produtos) e 'detPag' (pagamentos) sejam sempre arrays.
   const detalhesProdutos = Array.isArray(infNFe.det)
     ? infNFe.det
     : [infNFe.det];

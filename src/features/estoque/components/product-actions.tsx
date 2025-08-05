@@ -1,7 +1,7 @@
 import { Button } from "@/shared/components/ui/button";
 import { Edit, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import type { Produto } from "./column";
+import type { Produto } from "../types";
 
 interface ProductActionsProps {
   produto: Produto;
@@ -19,10 +19,6 @@ export function ProductActions({ produto }: ProductActionsProps) {
       alert(`Produto deletado: ${produto.nome}`);
     }
   };
-
-  // const handleView = () => {
-  //   alert(`Visualizando produto: ${produto.nome}`);
-  // };
 
   return (
     <div className="flex items-center gap-1">

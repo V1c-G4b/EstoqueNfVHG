@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import type { UnidadeEstoque } from "../types";
 
-// Mock data - em um app real, viria de uma API
 const mockUnidades: UnidadeEstoque[] = [
   {
     id: "1",
@@ -52,7 +51,6 @@ export function useUnidades() {
     setLoading(true);
     setError(null);
     try {
-      // Simular chamada da API
       await new Promise((resolve) => setTimeout(resolve, 1000));
       setUnidades(mockUnidades);
     } catch (err) {
@@ -66,7 +64,6 @@ export function useUnidades() {
     setLoading(true);
     setError(null);
     try {
-      // Simular chamada da API
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
       const newUnidade: UnidadeEstoque = {
@@ -93,7 +90,6 @@ export function useUnidades() {
     setLoading(true);
     setError(null);
     try {
-      // Simular chamada da API
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
       setUnidades((prev) =>
@@ -119,7 +115,6 @@ export function useUnidades() {
     setLoading(true);
     setError(null);
     try {
-      // Simular chamada da API
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
       setUnidades((prev) => prev.filter((u) => u.id !== id));

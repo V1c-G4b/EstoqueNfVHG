@@ -1,4 +1,3 @@
-// Tipagens para usuários
 export interface Usuario {
   id: string;
   name: string;
